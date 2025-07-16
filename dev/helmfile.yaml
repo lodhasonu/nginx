@@ -7,11 +7,11 @@ releases:
     namespace: default
     createNamespace: true
     chart: bitnami/nginx
-    version: "21.0.6"  # choose your desired chart version
+    version: "21.0.6"
     values:
+      - replicaCount: 3
       - image:
           tag: "latest"
       - service:
           type: ClusterIP
           port: 80
-      - replicas: 2
