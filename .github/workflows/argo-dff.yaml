@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: ArgoCD Diff
-        uses: argocd-diff-action/argocd-diff-action@v0.5.1
+        uses: quizlet/argocd-diff-action@master
         with:
           argocd-server-fqdn: ${{ secrets.ARGOCD_SERVER }}
           argocd-token: ${{ secrets.ARGOCD_TOKEN }}
