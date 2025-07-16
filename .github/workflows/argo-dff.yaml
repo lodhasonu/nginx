@@ -21,7 +21,7 @@ jobs:
       - name: ArgoCD Diff
         uses: quizlet/argocd-diff-action@master
         with:
-          argocd-server-fqdn: ${{ secrets.ARGOCD_SERVER }}
+          argocd-server-fqdn: argo.infraspec.in
           argocd-token: ${{ secrets.ARGOCD_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           argocd-extra-cli-args: "--grpc-web"
