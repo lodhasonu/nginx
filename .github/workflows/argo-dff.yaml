@@ -26,4 +26,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           argocd-extra-cli-args: "--grpc-web"
           # optionally filter which apps to diff:
-          pp-name-matcher: "/^nginx$/"
+          app-name-matcher: "/^nginx$/"
