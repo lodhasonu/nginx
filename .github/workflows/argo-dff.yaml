@@ -1,0 +1,27 @@
+name: ArgoCD Diff Preview
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  argocd-diff:
+    name: Generate ArgoCD Diff
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+
+      - name: ArgoCD Diff
+        uses: argocd-diff-action/argocd-diff-action@v0.5.1
+        with:
+          argocd-server-fqdn: ${{ secrets.ARGOCD_SERVER }}
+          argocd-token: ${{ secrets.ARGOCD_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          argocd-extra-cli-args: "--grpc-web"
+          # optionally filter which apps to diff:
+          # app-name-matcher: "/^nginx-/"
