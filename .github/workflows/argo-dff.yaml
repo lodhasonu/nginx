@@ -2,13 +2,15 @@ name: ArgoCD Diff Preview
 
 on:
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
     paths:
       - 'dev/**'
+      - '.github/workflows/**'
 
 jobs:
   argocd-diff:
-    name: Generate ArgoCD Diff
+    name: Generate ArgoCD Diff for nginx
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,12 +20,20 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
 
-      - name: ArgoCD Diff
+      - name: Test connectivity & list ArgoCD apps
+        env:
+          ARGOCD_SERVER: argo.infraspec.in
+          ARGOCD_TOKEN: ${{ secrets.ARGOCD_TOKEN }}
+        run: |
+          curl -k -o apps.json "argo.infraspec.in/api/v1/applications"
+          echo "Apps found:"
+          jq -r '.items[].metadata.name' apps.json
+
+      - name: Generate ArgoCD Diff
         uses: quizlet/argocd-diff-action@master
         with:
-          argocd-server-url: argo.infraspec.in
+          argocd-server-url: v
           argocd-token: ${{ secrets.ARGOCD_TOKEN }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           argocd-extra-cli-args: "--grpc-web"
-          # optionally filter which apps to diff:
           app-name-matcher: "/^nginx$/"

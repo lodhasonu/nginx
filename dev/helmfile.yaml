@@ -9,7 +9,7 @@ releases:
     chart: bitnami/nginx
     version: "21.0.6"
     values:
-      - replicaCount: 3
+      - replicaCount: 1
       - image:
           tag: "latest"
       - service:
